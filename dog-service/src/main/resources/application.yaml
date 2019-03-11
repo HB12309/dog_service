@@ -1,0 +1,104 @@
+server:
+  port: 4800
+spring:
+  application:
+    name: service-tob-problem
+  http:
+    multipart:
+      enabled: false
+  mvc:
+    favicon:
+      enabled: false
+  jackson:
+    locale: zh_CN
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  redis:
+      database: 3
+      timeout: 1000
+      pool:
+        max-active: 10
+        max-idle: 10
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    sql-script-encoding: UTF-8
+    name: hikariCP
+    hikari:
+      maximum-pool-size: 10
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 2000
+      validation-timeout: 1000
+      idle-timeout: 10000
+      max-lifetime: 30000
+      connection-init-sql: "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;"
+      data-source-properties:
+        serverTimezone: GMT+8
+        useTimezone: true
+        zeroDateTimeBehavior: round
+        characterEncoding: utf8
+        cachePrepStmts: true
+        prepStmtCacheSize: 128
+        prepStmtCacheSqlLimit: 1024
+        useSSL: false
+        useUnicode: true
+mybatis:
+  mapper-locations: "db/mysql/mapper/*.xml"
+  type-aliases-package: cn.codemao.problem.domain.entity
+  configuration:
+      use-actual-param-name: true
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true
+
+security:
+  basic:
+    enabled: false
+
+cors:
+  enabled: true
+  mapping:
+    -
+      path: "/**"
+      allowed-origins: "*"
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+hystrix:
+  threadpool:
+    default:
+      coreSize: 16
+      maximumSize: 200
+      maxQueueSize: 20000
+      queueSizeRejectionThreshold: 20000
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8000
+
+flyway:
+  enabled: true
+  baseline-on-migrate: false
+  locations: "db/mysql/migration"
+  schemas:
+    - question
+
+onlineJudge:
+  host: https://onlinejudge.codemao.cn
+  signatureHeader: X-OnlineJudge-Signature
+  clientKey: SGdTWbo1tonsQlNG0QB0LjL2CbMf3fRN
+  clientSecret: lWBFZ0kPY4wVgHdcGOGIuH6YJw22OJve
+  language: "python3"
+  timeLimit: 10000 # 10秒
+  memoryLimit: 67108864 # 64 * 1024 * 1024,64MiB Memory
