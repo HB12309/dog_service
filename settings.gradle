@@ -1,4 +1,0 @@
-rootProject.name = 'dog_service'
-
-include 'dog-client'
-include 'dog-service'
