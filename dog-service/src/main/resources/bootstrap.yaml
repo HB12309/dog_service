@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: service-platform-workclub
+  mvc:
+    favicon:
+      enabled: false
+  jackson:
+    locale: zh_CN
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  sleuth:
+    log:
+      slf4j:
+        enabled: false
+  zipkin:
+    base-url: http://center-tracing
+    locator:
+      discovery:
+        enabled: true
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+server:
+  use-forward-headers: true
+logging:
+  pattern:
+    level: "%5p"
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true
+endpoints:
+  shutdown:
+    enabled: false
+  heapdump:
+    enabled: false
+  dump:
+    enabled: false
+  trace:
+    enabled: false
+    filter:
+      enabled: false
+  env:
+    enabled: false
+    post:
+      enabled: false
+  auditevents:
+    enabled: false
+  autoconfig:
+    enabled: false
+  flyway:
+    enabled: false
+  configprops:
+    enabled: false
+  mappings:
+    enabled: false
+  beans:
+    enabled: false
+  loggers:
+    enabled: false
+  metrics:
+    enabled: false
+    filter:
+      enabled: false
+  docs:
+    enabled: false
+    curies:
+      enabled: false
+  logfile:
+    enabled: false
+  jolokia:
+    enabled: false
+  hypermedia:
+    enabled: false
+  liquibase:
+    enabled: false
+  jmx:
+    enabled: false
+  actuator:
+    enabled: false
+  features:
+    enabled: false
+  pause:
+    enabled: false
+  refresh:
+    enabled: false
+  restart:
+    enabled: false
+    pause-endpoint:
+      enabled: false
+    resume-endpoint:
+      enabled: false
+  routes:
+    enabled: false
+  resume:
+    enabled: false
+management:
+  add-application-context-header: false

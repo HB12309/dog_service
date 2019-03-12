@@ -1,0 +1,74 @@
+buildscript {
+	ext {
+		jdkBuildVersion = '1.8'
+		springBootVersion = "2.1.3.RELEASE"
+		flyway_version = '5.0.7'
+		project_version = "1.0.3"
+		jacksonVersion = '2.9.2'
+	}
+
+	repositories {
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+		mavenLocal()
+		mavenCentral()
+		maven { url "https://plugins.gradle.org/m2/"}
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+	}
+}
+
+allprojects {
+	repositories {
+		maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+		jcenter()
+		mavenLocal()
+		mavenCentral()
+	}
+
+	buildscript {
+		repositories {
+			mavenLocal()
+			mavenCentral()
+		}
+	}
+
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'maven-publish'
+
+	group = 'ebing.top'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = jdkBuildVersion
+	targetCompatibility = jdkBuildVersion
+
+	jar {
+		baseName = 'dog'
+		version = 'gradle'
+	}
+
+	compileJava.dependsOn(processResources)
+
+	configurations.all {
+		resolutionStrategy.eachDependency {
+			switch (it.requested.name) {
+				case "jackson-annotations":
+					it.useTarget "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+					break
+				case "jackson-core":
+					it.useTarget "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+					break
+				case "jackson-databind":
+					it.useTarget "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+					break
+				case "logback-core":
+					it.useTarget "ch.qos.logback:logback-core:$logbackVersion"
+					break
+				case "logback-classic":
+					it.useTarget "ch.qos.logback:logback-classic:$logbackVersion"
+					break
+			}
+		}
+	}
+}

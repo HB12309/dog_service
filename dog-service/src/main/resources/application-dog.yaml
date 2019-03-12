@@ -1,0 +1,18 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://qhb:123456@localhost:8761/eureka/
+logging:
+  level:
+    root: info
+    cn.codemao: debug
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/question?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: mRVHePdfa4Z3X0ewfctefpZuqDrSbtINR4VRslgA2s
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
