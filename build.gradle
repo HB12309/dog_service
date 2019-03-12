@@ -52,10 +52,6 @@ allprojects {
 	sourceCompatibility = jdkBuildVersion
 	targetCompatibility = jdkBuildVersion
 
-//	bootRepackage {
-//		mainClass = 'ebing.top.dog.service.DogServiceApplication'
-//	}
-
 	jar {
 		baseName = 'dog-service'
 		version = 'gradle'
