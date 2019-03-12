@@ -43,15 +43,18 @@ allprojects {
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 	apply plugin: 'maven-publish'
+	apply plugin: 'application'
+
+	mainClassName = 'ebing.top.dog.service.DogServiceApplication'
 
 	group = 'ebing.top'
 	version = '0.0.1-SNAPSHOT'
 	sourceCompatibility = jdkBuildVersion
 	targetCompatibility = jdkBuildVersion
 
-	bootRepackage {
-		mainClass = 'ebing.top.dog.service.DogServiceApplication'
-	}
+//	bootRepackage {
+//		mainClass = 'ebing.top.dog.service.DogServiceApplication'
+//	}
 
 	jar {
 		baseName = 'dog-service'
