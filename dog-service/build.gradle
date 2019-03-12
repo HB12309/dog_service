@@ -59,8 +59,6 @@ dependencies {
 	compile 'commons-codec:commons-codec:1.11'
 	compile 'org.springframework.boot:spring-boot-starter-security'
 
-	kapt 'org.springframework.boot:spring-boot-configuration-processor'
-
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
