@@ -1,8 +1,8 @@
 dependencies {
     compile "org.springframework.cloud:spring-cloud-starter-openfeign"
-    compile "io.springfox:springfox-swagger2"
-    compile "io.springfox:springfox-swagger-ui"
-    compile "com.spring4all:spring-boot-starter-swagger"
+    compile "io.springfox:springfox-swagger2:$swaggerVersion"
+    compile "io.springfox:springfox-swagger-ui:$swaggerVersion"
+    compile "com.spring4all:spring-boot-starter-swagger:1.5.1.RELEASE"
     compile "org.apache.poi:poi:3.17"
     compile "org.apache.poi:poi-ooxml:3.17"
 }
