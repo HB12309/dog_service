@@ -1,8 +1,8 @@
 server:
-  port: 4800
+  port: 9999
 spring:
   application:
-    name: service-tob-problem
+    name: service-dog
   http:
     multipart:
       enabled: false
@@ -45,7 +45,7 @@ spring:
         useUnicode: true
 mybatis:
   mapper-locations: "db/mysql/mapper/*.xml"
-  type-aliases-package: cn.codemao.problem.domain.entity
+  type-aliases-package: ebing.top.dog.service.domain.entity
   configuration:
       use-actual-param-name: true
 pagehelper:
@@ -92,13 +92,4 @@ flyway:
   baseline-on-migrate: false
   locations: "db/mysql/migration"
   schemas:
-    - question
-
-onlineJudge:
-  host: https://onlinejudge.codemao.cn
-  signatureHeader: X-OnlineJudge-Signature
-  clientKey: SGdTWbo1tonsQlNG0QB0LjL2CbMf3fRN
-  clientSecret: lWBFZ0kPY4wVgHdcGOGIuH6YJw22OJve
-  language: "python3"
-  timeLimit: 10000 # 10秒
-  memoryLimit: 67108864 # 64 * 1024 * 1024,64MiB Memory
+    - dog
