@@ -1,4 +1,4 @@
-package ebing.top.dogservice;
+package ebing.top.dog.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
