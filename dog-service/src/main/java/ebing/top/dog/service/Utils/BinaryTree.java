@@ -86,7 +86,7 @@ public class BinaryTree {
 	 * @return 返回根节点是否为空
 	 */
 	public boolean isEmpty(){
-		return root == null;
+		return this.root == null;
 	}
 
 	//树的高度
