@@ -1,8 +1,8 @@
 package ebing.top.dog.service.client.impl;
 
-import ebing.top.dog.service.thread.Consumer;
-import ebing.top.dog.service.thread.CountDown;
-import ebing.top.dog.service.thread.Producer;
+import ebing.top.dog.service.thread.*;
+import ebing.top.dog.service.thread.barrier.TourGuideTask;
+import ebing.top.dog.service.thread.barrier.TravelTask;
 import ebing.top.dog.service.utils.CommonUtils;
 import ebing.top.dog.service.client.LanguageClient;
 import io.swagger.annotations.Api;
@@ -73,6 +73,14 @@ public class LanguageClientImpl implements LanguageClient {
 			}
 
 			System.out.println("This is the main thread!");
+		}
+		if ("CyclicBarrier".equals(type)) {
+			CyclicBarrier cyclicBarrier = new CyclicBarrier(3, new TourGuideTask());
+        	Executor executor = Executors.newFixedThreadPool(3);
+        //登哥最大牌，到的最晚
+        	executor.execute(new TravelTask(cyclicBarrier,"哈登",5));
+        	executor.execute(new TravelTask(cyclicBarrier,"保罗",3));
+        	executor.execute(new TravelTask(cyclicBarrier,"戈登",1));
 		}
 		return "success";
 	}
