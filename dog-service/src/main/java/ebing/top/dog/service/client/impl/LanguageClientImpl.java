@@ -1,5 +1,7 @@
 package ebing.top.dog.service.client.impl;
 
+import ebing.top.dog.service.thread.Consumer;
+import ebing.top.dog.service.thread.Producer;
 import ebing.top.dog.service.utils.CommonUtils;
 import ebing.top.dog.service.client.LanguageClient;
 import io.swagger.annotations.Api;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
@@ -47,7 +51,14 @@ public class LanguageClientImpl implements LanguageClient {
 			System.out.println("start async");
 			commonUtils.asyncTask("喜欢 async ");
 			System.out.println("end async");
-
+		}
+		// 不要显式地创建线程，请使用线程池
+		if ("BlockingQueue".equals(type)) {
+			BlockingQueue<String> queue = new ArrayBlockingQueue<>(100);
+    		Producer producer = new Producer(queue);
+    		Consumer consumer = new Consumer(queue);
+    		new Thread(producer).start();
+    		new Thread(consumer).start();
 		}
 		return "success";
 	}

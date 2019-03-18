@@ -31,7 +31,8 @@ public class ExecutorServiceHelper {
 				NUMBER_OF_CORES * 2,
 				KEEP_ALIVE_TIME,
 				KEEP_ALIVE_TIME_UNIT,
-				mWorkQueue,mThreadFactory
+				mWorkQueue,
+				mThreadFactory
 		);
 	}
 
