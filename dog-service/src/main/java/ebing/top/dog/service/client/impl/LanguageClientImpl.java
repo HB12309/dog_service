@@ -1,8 +1,9 @@
 package ebing.top.dog.service.client.impl;
 
+import ebing.top.dog.service.utils.CommonUtils;
 import ebing.top.dog.service.client.LanguageClient;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,9 @@ import java.util.stream.Stream;
  */
 public class LanguageClientImpl implements LanguageClient {
 
+	@Autowired
+	private CommonUtils commonUtils;
+
 	/**
 	 * 哦，在调用第二个方法的时候，我的流已经被使用了，这样是不可以的。
 	 *
@@ -32,13 +36,27 @@ public class LanguageClientImpl implements LanguageClient {
 	@Override
 	@GetMapping("/thread")
 	public String thread(
-		@RequestParam(value = "type", required = false) @ApiParam("意见反馈") String type
+		@RequestParam(value = "type", required = false) String type
 	) {
 		if ("stream".equals(type)) {
 			Integer a = ThreadLocalRandom.current().nextInt();
 			streamAPI();
 			return Integer.toString(ThreadLocalRandom.current().nextInt(10) + 100000);
 		}
+		if ("async".equals(type)) {
+			System.out.println("start async");
+			commonUtils.asyncTask("喜欢 async ");
+			System.out.println("end async");
+
+		}
 		return "success";
+	}
+
+	@Override
+	@PostMapping("/study")
+	public String study(
+		@RequestParam(value = "type", required = false) String type
+	) {
+		return "test";
 	}
 }

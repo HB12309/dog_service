@@ -1,6 +1,6 @@
 package ebing.top.dog.service.client.impl;
 
-import ebing.top.dog.service.Utils.BinaryTree;
+import ebing.top.dog.service.utils.BinaryTree;
 import ebing.top.dog.service.client.BackdoorClient;
 import io.swagger.annotations.Api;
 import org.springframework.validation.annotation.Validated;

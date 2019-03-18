@@ -21,4 +21,9 @@ public interface LanguageClient {
 		@RequestParam(value = "type", required = false)  String type
 	);
 
+	@PostMapping("/study")
+	String study(
+		@RequestParam(value = "type", required = false)  String type
+	);
+
 }

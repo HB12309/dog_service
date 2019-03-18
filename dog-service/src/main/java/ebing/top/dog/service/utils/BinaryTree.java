@@ -1,4 +1,4 @@
-package ebing.top.dog.service.Utils;
+package ebing.top.dog.service.utils;
 
 import java.util.Stack;
 
