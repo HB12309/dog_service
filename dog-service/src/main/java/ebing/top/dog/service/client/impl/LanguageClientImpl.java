@@ -90,6 +90,9 @@ public class LanguageClientImpl implements LanguageClient {
         	executor.execute(new TravelTask(cyclicBarrier,"保罗",3));
         	executor.execute(new TravelTask(cyclicBarrier,"戈登",1));
 		}
+		if ("Semaphore".equals(type)) {
+
+		}
 		return "success";
 	}
 
