@@ -1,5 +1,6 @@
 package ebing.top.dog.service.client.impl;
 
+import com.google.common.collect.ImmutableList;
 import ebing.top.dog.service.thread.*;
 import ebing.top.dog.service.thread.barrier.TourGuideTask;
 import ebing.top.dog.service.thread.barrier.TravelTask;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 
@@ -20,6 +24,10 @@ import java.util.stream.Stream;
 @RestController
 /**
  * @author dog
+ * java.util.ConcurrentModificationException
+ * fail-fast，即快速失败，它是Java集合的一种错误检测机制。当多个线程对集合（非fail-safe的集合类）进行结构上的改变的操作时，有可能会产生fail-fast机制，这个时候就会抛出ConcurrentModificationException（当方法检测到对象的并发修改，但不允许这种修改时就抛出该异常）。
+ *
+ * 同时需要注意的是，即使不是多线程环境，如果单线程违反了规则，同样也有可能会抛出改异常。
  */
 public class LanguageClientImpl implements LanguageClient {
 
@@ -85,11 +93,60 @@ public class LanguageClientImpl implements LanguageClient {
 		return "success";
 	}
 
+	/**
+	 *
+	 * @param type
+	 * @return
+	 * 之所以会抛出ConcurrentModificationException异常，是因为我们的代码中使用了增强for循环，而在增强for循环中，集合遍历是通过iterator进行的，但是元素的add/remove却是直接使用的集合类自己的方法。这就导致iterator在遍历的时候，会发现有一个元素在自己不知不觉的情况下就被删除/添加了，就会抛出一个异常，用来提示用户，可能发生了并发修改。
+	 * 解决办法：1、1、直接使用普通for循环进行操作
+	 * 2、直接使用Iterator进行操作
+	 * 使用Java 8中提供的filter过滤
+	 * 用过C#的表示foreach是不允许增删改元素的
+	 */
 	@Override
 	@PostMapping("/study")
 	public String study(
 		@RequestParam(value = "type", required = false) String type
 	) {
+		if ("foreach".equals(type)) {
+			ArrayList<String> list = new ArrayList();
+			list.add("a");
+			list.add("b");
+			list.add("c");
+			Iterator<String> iterator = list.iterator();
+			while (iterator.hasNext()) {
+				String item = iterator.next();
+				System.out.println(item);
+			}
+			// 使用ImmutableList初始化一个List
+			List<String> userNames = ImmutableList.of("Hollis", "hollis", "HollisChuang", "H");
+
+			System.out.println("使用for循环遍历List");
+			for (int i = 0; i < userNames.size(); i++) {
+				System.out.println(userNames.get(i));
+			}
+
+			System.out.println("使用foreach遍历List");
+			for (String userName : userNames) {
+				System.out.println(userName);
+			}
+
+			// 使用双括弧语法（double-brace syntax）建立并初始化一个List
+			List<String> names = new ArrayList<String>() {{
+				add("Hollis");
+				add("hollis");
+				add("HollisChuang");
+				add("H");
+			}};
+
+			for (int i = 0; i < names.size(); i++) {
+				if (names.get(i).equals("Hollis")) {
+					names.remove(i);
+				}
+			}
+
+			System.out.println(names);
+		}
 		return "test";
 	}
 }
