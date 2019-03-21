@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 
@@ -100,6 +101,19 @@ public class LanguageClientImpl implements LanguageClient {
 				threadPool.execute(new Employee(String.valueOf(i), s));
 			}
 			threadPool.shutdown();
+		}
+		/**
+		 *获取随机数，它才棒
+		 */
+		if ("AtomicInteger".equals(type)) {
+			AtomicInteger threadNumberAtomicInteger = new AtomicInteger(1);
+			String str =  Integer.toString(ThreadLocalRandom.current().nextInt(900000) + 100000);
+			Integer i2 = threadNumberAtomicInteger.get();
+			Integer i1 = threadNumberAtomicInteger.addAndGet(3);
+			System.out.println(i1);
+			System.out.println(i2);
+			System.out.println(str);
+
 		}
 		return "success";
 	}
