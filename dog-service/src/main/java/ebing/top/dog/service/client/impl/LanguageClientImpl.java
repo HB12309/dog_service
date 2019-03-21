@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 
@@ -91,7 +92,14 @@ public class LanguageClientImpl implements LanguageClient {
         	executor.execute(new TravelTask(cyclicBarrier,"戈登",1));
 		}
 		if ("Semaphore".equals(type)) {
-
+			final int THREAD_COUNT = 30;
+			ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
+			Semaphore s = new Semaphore(10);
+			for (int i = 0; i < THREAD_COUNT; i++) {
+				System.out.println(String.valueOf(i));
+				threadPool.execute(new Employee(String.valueOf(i), s));
+			}
+			threadPool.shutdown();
 		}
 		return "success";
 	}
@@ -149,6 +157,20 @@ public class LanguageClientImpl implements LanguageClient {
 			}
 
 			System.out.println(names);
+		}
+		if ("Random".equals(type)) {
+			/**
+			 * 1、java.util.Random类中实现的随机算法是伪随机，也就是有规则的随机，所谓有规则的就是在给定种(seed)的区间内随机生成数字；
+			 * 2、相同种子数的Random对象，相同次数生成的随机数字是完全相同的；
+			 * 3、Random类中各方法生成的随机数字都是均匀分布的，也就是说区间内部的数字生成的几率均等；
+			 *
+			 * 这尼玛在相同种子下的 next 的结果是一样的？算是明白了，随机一次，这和你随机给个数字有什么区别？
+			 */
+			Random rand = new Random(2000);
+			System.out.println(rand.nextBoolean());
+			System.out.println(rand.nextInt());
+			System.out.println(rand.nextInt(64));
+			System.out.println(rand.ints());
 		}
 		return "test";
 	}
