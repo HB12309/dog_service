@@ -187,6 +187,9 @@ public class LanguageClientImpl implements LanguageClient {
 			 * 3、Random类中各方法生成的随机数字都是均匀分布的，也就是说区间内部的数字生成的几率均等；
 			 *
 			 * 这尼玛在相同种子下的 next 的结果是一样的？算是明白了，随机一次，这和你随机给个数字有什么区别？
+			 *
+			 * 所以，N个 thread 对同一个字段进行操作的话，则需要 加锁、使用原子变量等等
+			 * private static volatile AtomicInteger atomCounter = new AtomicInteger(0); //Java提供的int型原子变量
 			 */
 			Random rand = new Random(2000);
 			System.out.println(rand.nextBoolean());
@@ -202,10 +205,19 @@ public class LanguageClientImpl implements LanguageClient {
 			} finally {
 				lock.unlock();
 			}
-			ReentrantLockTest test1 = new ReentrantLockTest("thread1", number);
-			ReentrantLockTest2 test2 = new ReentrantLockTest2("thread2", number);
+//			ReentrantLockTest test1 = new ReentrantLockTest("thread1", number);
+			ReentrantLockTest test1 = new ReentrantLockTest("thread2", number);
+			ReentrantLockTest test2 = new ReentrantLockTest("thread2", number);
 			test1.start();
 			test2.start();
+			try {
+				test1.join();
+				test2.join();
+				System.out.printf("counter = %d\n", test1.getI());
+
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			log.debug(String.valueOf(test1.getI()));
 			log.debug(String.valueOf(test2.getI()));
 		}
