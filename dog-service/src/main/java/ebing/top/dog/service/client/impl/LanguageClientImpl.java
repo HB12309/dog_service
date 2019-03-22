@@ -138,7 +138,8 @@ public class LanguageClientImpl implements LanguageClient {
 	@Override
 	@PostMapping("/study")
 	public String study(
-		@RequestParam(value = "type", required = false) String type
+		@RequestParam(value = "type", required = false) String type,
+		@RequestParam(value = "number", required = false) Integer number
 	) {
 		if ("foreach".equals(type)) {
 			ArrayList<String> list = new ArrayList();
@@ -201,8 +202,8 @@ public class LanguageClientImpl implements LanguageClient {
 			} finally {
 				lock.unlock();
 			}
-			ReentrantLockTest test1 = new ReentrantLockTest("thread1");
-			ReentrantLockTest2 test2 = new ReentrantLockTest2("thread2");
+			ReentrantLockTest test1 = new ReentrantLockTest("thread1", number);
+			ReentrantLockTest2 test2 = new ReentrantLockTest2("thread2", number);
 			test1.start();
 			test2.start();
 			log.debug(String.valueOf(test1.getI()));

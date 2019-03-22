@@ -1,6 +1,6 @@
 spring:
   application:
-    name: service-platform-workclub
+    name: serviceDog
   mvc:
     favicon:
       enabled: false

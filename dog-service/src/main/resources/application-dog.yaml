@@ -1,7 +1,12 @@
+server:
+  port: 9999
+
 eureka:
   client:
+    register-with-eureka: false
     service-url:
       defaultZone: http://qhb:123456@localhost:8761/eureka/
+
 logging:
   level:
     root: info

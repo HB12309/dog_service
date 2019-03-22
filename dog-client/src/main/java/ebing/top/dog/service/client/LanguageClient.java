@@ -23,7 +23,8 @@ public interface LanguageClient {
 
 	@PostMapping("/study")
 	String study(
-		@RequestParam(value = "type", required = false)  String type
+		@RequestParam(value = "type", required = false)  String type,
+		@RequestParam(value = "number", required = false) Integer number
 	);
 
 }
