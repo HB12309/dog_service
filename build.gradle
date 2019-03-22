@@ -8,6 +8,7 @@ buildscript {
 		project_version = "1.0.3"
 		jacksonVersion = '2.9.2'
 		pageVersion='1.2.0'
+		lombokVersion = '1.18.2'
 	}
 
 	repositories {

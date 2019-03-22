@@ -10,6 +10,9 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,9 +20,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 
 
+@Log
 @Api(tags = "language模块", description = "language 模块相关接口")
 @Validated
 @RequestMapping("/language")
@@ -32,6 +37,8 @@ import java.util.stream.Stream;
  * 同时需要注意的是，即使不是多线程环境，如果单线程违反了规则，同样也有可能会抛出改异常。
  */
 public class LanguageClientImpl implements LanguageClient {
+
+	private static final Logger log = LoggerFactory.getLogger(LanguageClientImpl.class);
 
 	@Autowired
 	private CommonUtils commonUtils;
@@ -185,6 +192,21 @@ public class LanguageClientImpl implements LanguageClient {
 			System.out.println(rand.nextInt());
 			System.out.println(rand.nextInt(64));
 			System.out.println(rand.ints());
+		}
+		if ("ReentrantLock".equals(type)) {
+			ReentrantLock lock = new ReentrantLock();
+			try {
+				lock.lock();
+				log.info("已经上锁,开始对唯一资源进行并发操作，比如微信的 access token", lock);
+			} finally {
+				lock.unlock();
+			}
+			ReentrantLockTest test1 = new ReentrantLockTest("thread1");
+			ReentrantLockTest2 test2 = new ReentrantLockTest2("thread2");
+			test1.start();
+			test2.start();
+			log.debug(String.valueOf(test1.getI()));
+			log.debug(String.valueOf(test2.getI()));
 		}
 		return "test";
 	}

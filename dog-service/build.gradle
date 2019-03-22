@@ -26,6 +26,7 @@ dependencies {
 
 	compile "ch.qos.logback:logback-core"
 	compile "ch.qos.logback:logback-classic"
+	compile "org.projectlombok:lombok:$lombokVersion"
 
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-aop')
