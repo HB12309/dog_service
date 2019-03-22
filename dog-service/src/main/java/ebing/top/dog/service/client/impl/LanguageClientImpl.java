@@ -14,13 +14,11 @@ import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -220,6 +218,18 @@ public class LanguageClientImpl implements LanguageClient {
 			}
 			log.debug(String.valueOf(test1.getI()));
 			log.debug(String.valueOf(test2.getI()));
+		}
+		/**
+		 * StringJoiner 和 StringBuilder 差不多，但这是 java.util 提供的，自己人嘛
+		 */
+		if ("StringJoiner".equals(type)) {
+			StringJoiner sj = new StringJoiner("我");
+			sj.add("love");
+			sj.add("Java干货");
+			System.out.println(sj.toString());
+			List<String> list = ImmutableList.of("wo","love","Java干货");
+			String result = list.stream().collect(Collectors.joining(":"));
+			System.out.println("result   " + result);
 		}
 		return "test";
 	}
