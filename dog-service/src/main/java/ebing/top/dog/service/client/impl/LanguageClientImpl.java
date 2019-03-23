@@ -14,6 +14,8 @@ import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -221,6 +223,7 @@ public class LanguageClientImpl implements LanguageClient {
 		}
 		/**
 		 * StringJoiner 和 StringBuilder 差不多，但这是 java.util 提供的，自己人嘛
+		 * 参考：https://www.hollischuang.com/archives/3283
 		 */
 		if ("StringJoiner".equals(type)) {
 			StringJoiner sj = new StringJoiner("我");
@@ -230,6 +233,11 @@ public class LanguageClientImpl implements LanguageClient {
 			List<String> list = ImmutableList.of("wo","love","Java干货");
 			String result = list.stream().collect(Collectors.joining(":"));
 			System.out.println("result   " + result);
+		}
+		if ("LocalDateTime".equals(type)) {
+			LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Los_Angeles"));
+			System.out.println(now);
+
 		}
 		return "test";
 	}
