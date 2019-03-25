@@ -14,6 +14,7 @@ import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -236,8 +237,19 @@ public class LanguageClientImpl implements LanguageClient {
 		}
 		if ("LocalDateTime".equals(type)) {
 			LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Los_Angeles"));
-			System.out.println(now);
-
+			System.out.println("LocalDateTime    " + now);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+			System.out.println("Calendar == " + sdf.format(Calendar.getInstance().getTime()));
+		}
+		if ("SimperDateFormat".equals(type)) {
+			//定义一个线程安全的HashSet
+			Set<String> dates = Collections.synchronizedSet(new HashSet<String>());
+			for (int i = 0; i < 100; i++) {
+				//获取当前时间
+				Calendar calendar = Calendar.getInstance();
+				System.out.println("calendar     " + calendar);
+			}
 		}
 		return "test";
 	}
