@@ -14,6 +14,7 @@ import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -121,7 +122,15 @@ public class LanguageClientImpl implements LanguageClient {
 			System.out.println(i1);
 			System.out.println(i2);
 			System.out.println(str);
-
+		}
+		/**
+		 * 自动装箱
+		 * 手动装箱 Integer i = new Integer(10);
+		 * 自动拆箱
+		 */
+		if ("boxing".equals(type)) {
+			Integer i =10;
+			int b = i;
 		}
 		return "success";
 	}
@@ -249,6 +258,23 @@ public class LanguageClientImpl implements LanguageClient {
 				//获取当前时间
 				Calendar calendar = Calendar.getInstance();
 				System.out.println("calendar     " + calendar);
+			}
+		}
+		/**
+		 * Error:(267, 68) java: 未报告的异常错误java.lang.NoSuchMethodException; 必须对其进行捕获或声明以便抛出
+		 * 所以 Java 是有些异常一定是要你捕获的，不像 kotlin 有 ?. let
+		 * 这里用到了 reflect, 所以是 new 出来的对象要追溯它的模子，就用反射，比如 capacity 这种字段
+		 */
+		if ("HashMap".equals(type)) {
+			Map<String, String> map = new HashMap<String, String>(1);
+			map.put("hahaha", "hollischuang");
+			Class<?> mapType = map.getClass();
+			try {
+				Method capacity = mapType.getDeclaredMethod("capacity");
+				capacity.setAccessible(true);
+				System.out.println("capacity : " + capacity.invoke(map));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		return "test";
