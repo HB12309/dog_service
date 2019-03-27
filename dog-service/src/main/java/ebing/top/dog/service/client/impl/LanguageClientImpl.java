@@ -264,10 +264,17 @@ public class LanguageClientImpl implements LanguageClient {
 		 * Error:(267, 68) java: 未报告的异常错误java.lang.NoSuchMethodException; 必须对其进行捕获或声明以便抛出
 		 * 所以 Java 是有些异常一定是要你捕获的，不像 kotlin 有 ?. let
 		 * 这里用到了 reflect, 所以是 new 出来的对象要追溯它的模子，就用反射，比如 capacity 这种字段
+		 * 在 同一种 JDK 中 ，hashCode 函数，数字的是本身，String 和 Object 长度一样，并且是数字，并且同一个值的 hashCode 一定是唯一的。
+		 * 为了保证哈希的结果可以分散、为了提高哈希的效率，JDK在一个小小的hash方法上就有很多考虑，做了很多事情。
 		 */
 		if ("HashMap".equals(type)) {
 			Map<String, String> map = new HashMap<String, String>(1);
 			map.put("hahaha", "hollischuang");
+			Integer i = 333;
+			String str = "1222rew";
+			System.out.println(i.hashCode());
+			System.out.println(str.hashCode());
+			System.out.println(map.hashCode());
 			Class<?> mapType = map.getClass();
 			try {
 				Method capacity = mapType.getDeclaredMethod("capacity");
@@ -276,6 +283,15 @@ public class LanguageClientImpl implements LanguageClient {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			/**
+			 * map 居然可以使用 null 值作为 key 和 value 就是 KV 嘛
+			 */
+			Map map2 = new HashMap(1);
+			map2.put(null, 1);
+			Object a = map2.get(null);
+			Object b = map2.get(1);
+			System.out.println("a     " + a);
+			System.out.println("b     " + b);
 		}
 		return "test";
 	}
