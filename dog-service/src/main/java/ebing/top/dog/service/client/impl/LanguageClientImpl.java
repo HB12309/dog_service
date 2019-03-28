@@ -1,6 +1,7 @@
 package ebing.top.dog.service.client.impl;
 
 import com.google.common.collect.ImmutableList;
+import ebing.top.dog.service.clazz.Apple;
 import ebing.top.dog.service.thread.*;
 import ebing.top.dog.service.thread.barrier.TourGuideTask;
 import ebing.top.dog.service.thread.barrier.TravelTask;
@@ -292,6 +293,17 @@ public class LanguageClientImpl implements LanguageClient {
 			Object b = map2.get(1);
 			System.out.println("a     " + a);
 			System.out.println("b     " + b);
+
+			Apple a1 = new Apple("green");
+			Apple a2 = new Apple("green");
+			Apple a3 = new Apple("red");
+
+			//hashMap stores apple type and its quantity
+			HashMap<Apple, Integer> m = new HashMap<Apple, Integer>();
+			m.put(a1, 10);
+			m.put(a3, 20);
+			System.out.println("a1    " + m.get(a1));
+			System.out.println("a2     " + m.get(a2));
 		}
 		return "test";
 	}
