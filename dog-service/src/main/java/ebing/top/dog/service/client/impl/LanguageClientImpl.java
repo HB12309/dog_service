@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -154,7 +156,8 @@ public class LanguageClientImpl implements LanguageClient {
 	@PostMapping("/study")
 	public String study(
 		@RequestParam(value = "type", required = false) String type,
-		@RequestParam(value = "number", required = false) Integer number
+		@RequestParam(value = "number", required = false) Integer number,
+		@RequestParam(value = "double1", required = false) Double double1
 	) {
 		if ("foreach".equals(type)) {
 			ArrayList<String> list = new ArrayList();
@@ -348,6 +351,11 @@ public class LanguageClientImpl implements LanguageClient {
 					e.printStackTrace();
 				}
 			}
+		}
+		if ("BigDecimal".equals(type)) {
+			BigDecimal bd = new BigDecimal(double1);
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			System.out.println("bd   " + bd);
 		}
 		return "test";
 	}
