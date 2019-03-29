@@ -2,12 +2,15 @@ package ebing.top.dog.service.client.impl;
 
 import com.google.common.collect.ImmutableList;
 import ebing.top.dog.service.clazz.Apple;
+import ebing.top.dog.service.clazz.UserSerializable;
 import ebing.top.dog.service.thread.*;
 import ebing.top.dog.service.thread.barrier.TourGuideTask;
 import ebing.top.dog.service.thread.barrier.TravelTask;
 import ebing.top.dog.service.utils.CommonUtils;
 import ebing.top.dog.service.client.LanguageClient;
 import io.swagger.annotations.Api;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -304,6 +308,46 @@ public class LanguageClientImpl implements LanguageClient {
 			m.put(a3, 20);
 			System.out.println("a1    " + m.get(a1));
 			System.out.println("a2     " + m.get(a2));
+		}
+		if ("Serializable".equals(type)) {
+			//Initializes The Object
+			UserSerializable user = new UserSerializable();
+			user.setName("hollis");
+			user.setGender("male");
+			user.setAge(23);
+			user.setBirthday(new Date());
+			System.out.println("user1   " + user);
+
+			//Write Obj to File
+			ObjectOutputStream oos = null;
+			try {
+				oos = new ObjectOutputStream(new FileOutputStream("tempFile"));
+				oos.writeObject(user);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				IOUtils.closeQuietly(oos);
+			}
+
+			//Read Obj from File
+			File file = new File("tempFile");
+			ObjectInputStream ois = null;
+			try {
+				ois = new ObjectInputStream(new FileInputStream(file));
+				UserSerializable newUser = (UserSerializable) ois.readObject();
+				System.out.println(newUser);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				IOUtils.closeQuietly(ois);
+				try {
+					FileUtils.forceDelete(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return "test";
 	}
