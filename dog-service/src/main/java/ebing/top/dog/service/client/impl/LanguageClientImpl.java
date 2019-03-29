@@ -8,10 +8,12 @@ import ebing.top.dog.service.thread.barrier.TourGuideTask;
 import ebing.top.dog.service.thread.barrier.TravelTask;
 import ebing.top.dog.service.utils.CommonUtils;
 import ebing.top.dog.service.client.LanguageClient;
+import ebing.top.dog.service.utils.FileTGZUtil;
 import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.java.Log;
@@ -156,6 +158,7 @@ public class LanguageClientImpl implements LanguageClient {
 	@PostMapping("/study")
 	public String study(
 		@RequestParam(value = "type", required = false) String type,
+		@RequestParam(value = "string", required = false) String string,
 		@RequestParam(value = "number", required = false) Integer number,
 		@RequestParam(value = "double1", required = false) Double double1
 	) {
@@ -356,6 +359,32 @@ public class LanguageClientImpl implements LanguageClient {
 			BigDecimal bd = new BigDecimal(double1);
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			System.out.println("bd   " + bd);
+		}
+		/**
+		 * 第一层括弧 实际是定义了一个内部匿名类 （Anonymous Inner Class），第二层括弧 实际上是一个实例初始化块 （instance initializer block），这个块在内部匿名类构造时被执行。这个块之所以被叫做“实例初始化块”是因为它们被定义在了一个类的实例范围内。这和“静态初始化块 （static initialzer）”不同，因为这种块在定义时在括弧前使用了static关键字，因此它的和类在同一个范围内的，也就是说当类加载时就会被执行（更详情，可参考Java语言规范http://java.sun.com/docs/books/jls/third_edition/html/classes.html#8.6 ）。实例初始化块中可以使用其容器范围内的所有方法及变量，但特别需要注意的是实例初始化块是在构造器之前运行的。
+		 *
+		 * 在Kotlin 中就可以使用 hashSetOf<String>("a", "b") 这种 xxxOf 的方法来初始化容器，装了东西的容器噢
+		 */
+		if ("HashSet".equals(type)) {
+			HashSet a = (new HashSet() {{
+				add("XZ13s");
+				add("AB21/X");
+				add("YYLEX");
+				add("AR5E");
+			}});
+			// iterator 一个游标，迭代器
+			System.out.println("a   " + a.iterator());
+		}
+		if ("unCompress".equals(type)) {
+			try {
+				String filepath = this.getClass().getClassLoader().getResource(string).getPath();
+				System.out.println("filepath     " + filepath);
+				File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + string);
+				List<String> resutls = FileTGZUtil.unCompress(filepath, ResourceUtils.CLASSPATH_URL_PREFIX + "static");
+				System.out.println("resutls     " + resutls);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return "test";
 	}
