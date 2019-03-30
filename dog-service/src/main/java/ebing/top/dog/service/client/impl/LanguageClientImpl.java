@@ -391,8 +391,10 @@ public class LanguageClientImpl implements LanguageClient {
 			try {
 				URL url = this.getClass().getClassLoader().getResource(string);
 				File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + string);
+				// 这里可以得到文件夹 不一定要有文件噢，就不用那样裁剪了
+				File file2 = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX);
 				ClassPathResource cpr = new ClassPathResource("static/1.zip");
-
+				System.out.println("file2.getAbsolutePath();     " + file2.getAbsolutePath());
 				System.out.println("url     " + url);
 				System.out.println("cpr     " + cpr.getPath());
 				System.out.println("file.getAbsolutePath()     " + file.getAbsolutePath());
