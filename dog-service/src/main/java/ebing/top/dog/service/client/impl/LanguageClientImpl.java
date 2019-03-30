@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -375,12 +377,34 @@ public class LanguageClientImpl implements LanguageClient {
 			// iterator 一个游标，迭代器
 			System.out.println("a   " + a.iterator());
 		}
+		/**
+		 * log 结果如下：
+		 * url     file:/Users/lx/Documents/java/dog_service/dog-service/out/production/classes/static/1.zip
+		 * cpr     static/1.zip
+		 * file.getAbsolutePath()     /Users/lx/Documents/java/dog_service/dog-service/out/production/classes/static/1.zip
+		 * file.getPath();     /Users/lx/Documents/java/dog_service/dog-service/out/production/classes/static/1.zip
+		 * file.getCanonicalPath();     /Users/lx/Documents/java/dog_service/dog-service/out/production/classes/static/1.zip
+		 * destPath     /Users/lx/Documents/java/dog_service/dog-service/out/production/classes/static/
+		 * resutls     [管理平台/, 管理平台/problem_question.json, __MACOSX/, __MACOSX/管理平台/, __MACOSX/管理平台/._problem_question.json, 管理平台/课程地图.png, __MACOSX/管理平台/._课程地图.png, 管理平台/B端地图.png,]
+		 */
 		if ("unCompress".equals(type)) {
 			try {
-				String filepath = this.getClass().getClassLoader().getResource(string).getPath();
-				System.out.println("filepath     " + filepath);
+				URL url = this.getClass().getClassLoader().getResource(string);
 				File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + string);
-				List<String> resutls = FileTGZUtil.unCompress(filepath, ResourceUtils.CLASSPATH_URL_PREFIX + "static");
+				ClassPathResource cpr = new ClassPathResource("static/1.zip");
+
+				System.out.println("url     " + url);
+				System.out.println("cpr     " + cpr.getPath());
+				System.out.println("file.getAbsolutePath()     " + file.getAbsolutePath());
+				System.out.println("file.getPath();     " + file.getPath());
+				System.out.println("file.getCanonicalPath();     " + file.getCanonicalPath());
+
+				String destPath = file.getPath().substring(0, file.getPath().length() - file.getName().length());
+				System.out.println("destPath     " + destPath);
+				List<String> resutls = FileTGZUtil.unCompress(
+						file.getAbsolutePath(),
+						destPath
+				);
 				System.out.println("resutls     " + resutls);
 			} catch (Exception e) {
 				e.printStackTrace();
