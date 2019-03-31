@@ -138,11 +138,22 @@ public class LanguageClientImpl implements LanguageClient {
 		 * 自动装箱 boxing unboxing
 		 * 手动装箱 Integer i = new Integer(10); 当然了，Integer.valueOf 这种，还会先判断cache -127 ~ 128
 		 * 自动拆箱
+		 * 所以，结果就是：由于使用了三目运算符，并且第二、第三位操作数分别是基本类型和对象。所以对对象进行拆箱操作，由于该对象为null，所以在拆箱过程中调用null.booleanValue()的时候就报了NPE。
+		 *
+		 * 五、问题解决
+		 * 如果代码这么写，就不会报错：
+		 *
+		 * Map<String,Boolean> map =  new HashMap<String, Boolean>();
+		 * Boolean b = (map!=null ? map.get("test") : Boolean.FALSE);
+		 * 就是保证了三目运算符的第二第三位操作数都为对象类型。
 		 */
 		if ("boxing".equals(type)) {
 			Integer i =10;
 			Integer a = Integer.valueOf(1111);
 			int b = i;
+			Map<String,Boolean> map =  new HashMap<String, Boolean>(8);
+			Boolean c = (map!=null ? map.get("test") : false);
+			System.out.println("c    " + c);
 		}
 		return "success";
 	}
@@ -412,9 +423,6 @@ public class LanguageClientImpl implements LanguageClient {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		if ("") {
-
 		}
 		return "test";
 	}
