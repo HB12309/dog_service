@@ -135,12 +135,13 @@ public class LanguageClientImpl implements LanguageClient {
 			System.out.println(str);
 		}
 		/**
-		 * 自动装箱
-		 * 手动装箱 Integer i = new Integer(10);
+		 * 自动装箱 boxing unboxing
+		 * 手动装箱 Integer i = new Integer(10); 当然了，Integer.valueOf 这种，还会先判断cache -127 ~ 128
 		 * 自动拆箱
 		 */
 		if ("boxing".equals(type)) {
 			Integer i =10;
+			Integer a = Integer.valueOf(1111);
 			int b = i;
 		}
 		return "success";
@@ -411,6 +412,9 @@ public class LanguageClientImpl implements LanguageClient {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		if ("") {
+
 		}
 		return "test";
 	}
