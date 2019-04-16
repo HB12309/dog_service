@@ -15,6 +15,11 @@ dependencies {
 	compile 'org.apache.commons:commons-lang3:3.7'
 	compile 'org.apache.commons:commons-compress:1.18'
 
+	compile 'io.springside:springside-utils:5.0.0-RC1'
+
+	compile 'com.alibaba.rocketmq:rocketmq-srvutil:3.2.6'
+	compile 'org.apache.rocketmq:rocketmq-client:4.2.0'
+
 	compile group: 'org.flywaydb', name: 'flyway-core', version: flyway_version
 
 	compile "com.github.pagehelper:pagehelper-spring-boot-starter:$pageVersion"

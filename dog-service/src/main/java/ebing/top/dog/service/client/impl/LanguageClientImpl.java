@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springside.modules.utils.base.PropertiesUtil;
 
 import java.io.*;
 import java.lang.reflect.Method;
@@ -423,6 +424,12 @@ public class LanguageClientImpl implements LanguageClient {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		if ("properties".equals(type)) {
+			Properties p1 = PropertiesUtil.loadFromFile("classpath://application.properties");
+			System.out.println("p1     " + p1);
+			int a = PropertiesUtil.getInt(p1, "springside.min", 0);
+			System.out.println("a     " + a);
 		}
 		return "test";
 	}
