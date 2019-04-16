@@ -23,6 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springside.modules.utils.base.PropertiesUtil;
 
+/**
+ * import static静态导入是JDK1.5中的新特性。一般我们导入一个类都用 import com.....ClassName;而静态导入是这样：import static com.....ClassName.*;这里的多了个static，还有就是类名ClassName后面多了个 .* ，意思是导入这个类里的静态方法。当然，也可以只导入某个静态方法，只要把 .* 换成静态方法名就行了。然后在这个类中，就可以直接用方法名调用静态方法，而不必用ClassName.方法名 的方式来调用。
+ *
+ * 这种方法的好处就是可以简化一些操作，例如打印操作System.out.println(...);就可以将其写入一个静态方法print(...)，在使用时直接print(...)就可以了。
+ */
 import static org.assertj.core.api.Assertions.*;
 import java.io.*;
 import java.lang.reflect.Method;
