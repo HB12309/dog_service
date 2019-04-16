@@ -12,6 +12,7 @@ import ebing.top.dog.service.utils.FileTGZUtil;
 import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.assertj.core.api.Fail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
@@ -22,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springside.modules.utils.base.PropertiesUtil;
 
+import static org.assertj.core.api.Assertions.*;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -426,6 +428,10 @@ public class LanguageClientImpl implements LanguageClient {
 			}
 		}
 		if ("properties".equals(type)) {
+			/**
+			 * java.lang.AssertionError: should fail before
+			 */
+			fail("should fail before");
 			Properties p1 = PropertiesUtil.loadFromFile("classpath://application.properties");
 			System.out.println("p1     " + p1);
 			int a = PropertiesUtil.getInt(p1, "springside.min", 0);

@@ -16,6 +16,7 @@ dependencies {
 	compile 'org.apache.commons:commons-compress:1.18'
 
 	compile 'io.springside:springside-utils:5.0.0-RC1'
+	compile 'org.assertj:assertj-core:3.12.2'
 
 	compile 'com.alibaba.rocketmq:rocketmq-srvutil:3.2.6'
 	compile 'org.apache.rocketmq:rocketmq-client:4.2.0'
