@@ -12,7 +12,6 @@ import ebing.top.dog.service.utils.FileTGZUtil;
 import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.assertj.core.api.Fail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springside.modules.utils.base.ObjectUtil;
 import org.springside.modules.utils.base.PropertiesUtil;
+import org.springside.modules.utils.collection.MapUtil;
 
 /**
  * import static静态导入是JDK1.5中的新特性。一般我们导入一个类都用 import com.....ClassName;而静态导入是这样：import static com.....ClassName.*;这里的多了个static，还有就是类名ClassName后面多了个 .* ，意思是导入这个类里的静态方法。当然，也可以只导入某个静态方法，只要把 .* 换成静态方法名就行了。然后在这个类中，就可以直接用方法名调用静态方法，而不必用ClassName.方法名 的方式来调用。
@@ -441,6 +442,25 @@ public class LanguageClientImpl implements LanguageClient {
 			System.out.println("p1     " + p1);
 			int a = PropertiesUtil.getInt(p1, "springside.min", 0);
 			System.out.println("a     " + a);
+		}
+		if ("treeMap".equals(type)) {
+			TreeMap<Integer, String> map = MapUtil.newSortedMap();
+			map.put(3, "xxx");
+			map.put(2, "xxx2");
+			map.put(6, "xxx3");
+			map.put(1, "xxx4");
+			System.out.println("map     " + map.keySet());
+			HashMap<Integer, String> map2 = MapUtil.newHashMapWithCapacity(4, 0.5f);
+			map2.put(3, "xxx");
+			map2.put(2, "xxx2");
+			map2.put(6, "xxx3");
+			map2.put(1, "xxx4");
+			System.out.println("map2     " + map2.keySet());
+			short[] array = new short[] { 1, 2 };
+			System.out.println("array     " + array);
+			String arrayString = ObjectUtil.toPrettyString(array);
+			System.out.println("arrayString     " + arrayString);
+
 		}
 		return "test";
 	}
