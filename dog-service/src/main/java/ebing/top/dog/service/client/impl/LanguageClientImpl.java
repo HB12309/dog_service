@@ -449,13 +449,18 @@ public class LanguageClientImpl implements LanguageClient {
 			map.put(2, "xxx2");
 			map.put(6, "xxx3");
 			map.put(1, "xxx4");
-			System.out.println("map     " + map.keySet());
-			HashMap<Integer, String> map2 = MapUtil.newHashMapWithCapacity(4, 0.5f);
+			for(Map.Entry<Integer, String> entry : map.entrySet()) {
+				System.out.println(entry.getKey() + ": " + entry.getValue());
+			}
+			System.out.println("map     " + map.entrySet());
+			HashMap<Integer, String> map2 = new HashMap<Integer, String>();
 			map2.put(3, "xxx");
 			map2.put(2, "xxx2");
 			map2.put(6, "xxx3");
 			map2.put(1, "xxx4");
-			System.out.println("map2     " + map2.keySet());
+			for(Map.Entry<Integer, String> entry : map2.entrySet()) {
+				System.out.println(entry.getKey() + ": " + entry.getValue());
+			}
 			short[] array = new short[] { 1, 2 };
 			System.out.println("array     " + array);
 			String arrayString = ObjectUtil.toPrettyString(array);
