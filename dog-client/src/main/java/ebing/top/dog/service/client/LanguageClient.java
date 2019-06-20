@@ -1,6 +1,8 @@
 package ebing.top.dog.service.client;
 
+import ebing.top.dog.service.domain.outbound.Resp;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,4 +31,9 @@ public interface LanguageClient {
 		@RequestParam(value = "double1", required = false) Double double1
 	);
 
+	@GetMapping("/resp")
+	ResponseEntity<Resp> getProduct();
+
+	@GetMapping("/resp2")
+	Resp getProduct2();
 }

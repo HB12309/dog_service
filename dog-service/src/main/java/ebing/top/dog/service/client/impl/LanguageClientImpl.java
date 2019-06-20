@@ -3,6 +3,7 @@ package ebing.top.dog.service.client.impl;
 import com.google.common.collect.ImmutableList;
 import ebing.top.dog.service.clazz.Apple;
 import ebing.top.dog.service.clazz.UserSerializable;
+import ebing.top.dog.service.domain.outbound.Resp;
 import ebing.top.dog.service.thread.*;
 import ebing.top.dog.service.thread.barrier.TourGuideTask;
 import ebing.top.dog.service.thread.barrier.TravelTask;
@@ -14,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -468,5 +470,30 @@ public class LanguageClientImpl implements LanguageClient {
 
 		}
 		return "test";
+	}
+
+
+	/**
+	 * ResponseEntity 加不加，对于前端来说是一样的，对于后端调用方，不同。需要加 .body 嘛
+	 * @return
+	 */
+	@Override
+	@GetMapping("/resp")
+	public ResponseEntity<Resp> getProduct() {
+//		String[] list = new String[] {"sdf", "gdf" };
+		List<String> list = new ArrayList<>();
+		list.add("fsdfsd");
+		list.add("wo");
+		Resp re = new Resp(list, 4);
+		return ResponseEntity.ok(re);
+	}
+
+	@Override
+	@GetMapping("/resp2")
+	public Resp getProduct2() {
+		List<String> list = new ArrayList<>();
+		list.add("fsdfsd");
+		list.add("wo");
+		return new Resp(list, 4);
 	}
 }
