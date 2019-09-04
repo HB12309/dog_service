@@ -4,10 +4,10 @@ import ebing.top.dog.service.utils.BinaryTree;
 import ebing.top.dog.service.client.BackdoorClient;
 import io.swagger.annotations.Api;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Api(tags = "后门模块", description = "backdoor 模块相关接口")
@@ -20,9 +20,40 @@ import org.springframework.web.bind.annotation.RestController;
 public class BackdoorClientImpl implements BackdoorClient {
 
 	@Override
-	@GetMapping("/monitor")
-	public String monitor() {
-		return "hello world";
+	@GetMapping("/array")
+	public String monitor(
+		@RequestParam(value = "type", required = false)  String type
+	) {
+		if (type == "array") {
+			String[] array = {"a", "b"};
+			Object obj1 = array;
+			return ((String[]) obj1)[0];
+		}
+		/**
+		 * sublist 好恶心，父子互相影响
+		 */
+		if ("sublist".equals(type)) {
+			List master = new ArrayList<Integer>();
+			master.add(1);
+			master.add(2);
+			master.add(3);
+			master.add(4);
+			master.add(5);
+			List sub = master.subList(0, 3);
+//			master.remove(0);
+//			master.add(6); // 留有这个也不行，必须3个都注释。。改变了 master 的话，sublist 也有问题。ConcurrentModificationException
+//			master.clear();
+
+			sub.clear();
+			sub.add(7);
+			sub.add(8);
+			sub.remove(0);
+
+			sub.forEach(i -> System.out.println(i));
+			System.out.println("隔断啦");
+			master.forEach(i -> System.out.println(i));
+		}
+		return "success";
 	}
 
 	@Override
@@ -52,4 +83,6 @@ public class BackdoorClientImpl implements BackdoorClient {
 		bt.noRecPostOrder(bt.getRoot());
 		return "success";
 	}
+
+
 }
