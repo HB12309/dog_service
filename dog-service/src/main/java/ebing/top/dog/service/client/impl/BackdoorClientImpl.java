@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 @Api(tags = "后门模块", description = "backdoor 模块相关接口")
@@ -52,6 +53,22 @@ public class BackdoorClientImpl implements BackdoorClient {
 			sub.forEach(i -> System.out.println(i));
 			System.out.println("隔断啦");
 			master.forEach(i -> System.out.println(i));
+		}
+		if ("treeSet".equals(type)) {
+			TreeSet<Integer> a = new TreeSet<Integer>();
+			a.add(6);
+			a.add(2);
+			a.add(9);
+			a.add(1);
+			System.out.println("隔断啦");
+			TreeSet<String> b = new TreeSet<String>();
+			b.add("c");
+			b.add("ca");
+			b.add("a");
+			b.add("f");
+			b.add("fa");
+			b.add("f1");
+			b.forEach(i -> System.out.println(i));
 		}
 		return "success";
 	}
